@@ -15,33 +15,37 @@ function getInputs() {
   };
 }
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  /*const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);*/
+async function run() {
+  try {
+    // `who-to-greet` input defined in action metadata file
+    /*const nameToGreet = core.getInput('who-to-greet');
+    console.log(`Hello ${nameToGreet}!`);
+    const time = (new Date()).toTimeString();
+    core.setOutput("time", time);
+    // Get the JSON webhook payload for the event that triggered the workflow
+    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    console.log(`The event payload: ${payload}`);*/
 
-  // Octokit.js
-  // https://github.com/octokit/core.js#readme
+    // Octokit.js
+    // https://github.com/octokit/core.js#readme
 
-const { repository, token } = getInputs();
-const octokit = github.getOctokit(token);
-  
-   const response = await octokit.request(
-    `GET /repos/{repo}/milestones/`,
-    {
-      repo: repository
-    }
-  );
-  const data = response.data;
+  const { repository, token } = getInputs();
+  const octokit = github.getOctokit(token);1
+    
+    const response = await octokit.request(
+      `GET /repos/{repo}/milestones/`,
+      {
+        repo: repository
+      }
+    );
+    const data = response.data;
 
-  console.log(data);
-  core.setOutput('data', data);
+    console.log(data);
+    core.setOutput('data', data);
 
-} catch (error) {
-  core.setFailed(error.message);
-}
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+};
+
+run();
