@@ -10,7 +10,6 @@ console.log("start");
   const token = process.env.GITHUB_TOKEN;
   const { repository, owner } = github.context.repo
 
-  console.log("owner");
 
   return {
     repository,
@@ -34,7 +33,8 @@ async function run() {
     // https://github.com/octokit/core.js#readme
 
   const { repository, owner, token } = getInputs();
-  console.log(token);
+  console.log(owner);
+  console.log(repository);
   const octokit = github.getOctokit(token);1
 
 
