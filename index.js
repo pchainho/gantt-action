@@ -9,7 +9,6 @@ function getInputs() {
   const token = process.env.GITHUB_TOKEN;
   const owner = github.context.repo.owner;
   const repo = github.context.repo.repo;
-  console.log(repo);
 
   return {
     repo,
@@ -39,7 +38,7 @@ async function run() {
 
 
     const response = await octokit.request(
-      `GET /repos/{owner}/{repo}/milestones/`,
+      `GET /repos/{owner}/{repo}/milestones`,
       {
         owner: owner,
         repo: repo
