@@ -30,8 +30,10 @@ async function run() {
     // https://github.com/octokit/core.js#readme
 
   const { repository, token } = getInputs();
+  console.log(token);
   const octokit = github.getOctokit(token);1
-    
+
+
     const response = await octokit.request(
       `GET /repos/{repo}/milestones/`,
       {
