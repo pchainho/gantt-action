@@ -2,17 +2,20 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 function getInputs() {
-  const requiredOptions = { required: true };
+//  const requiredOptions = { required: true };
+console.log("start");
 
 //  const repository = core.getInput("repository", requiredOptions);
 //  const milestone = core.getInput("milestone", requiredOptions);
   const token = process.env.GITHUB_TOKEN;
   const { repository, owner } = github.context.repo
 
+  console.log("owner");
+
   return {
     repository,
     owner,
-    token,
+    token
   };
 }
 
