@@ -4,13 +4,14 @@ const github = require('@actions/github');
 function getInputs() {
   const requiredOptions = { required: true };
 
-  const repository = core.getInput("repository", requiredOptions);
+//  const repository = core.getInput("repository", requiredOptions);
 //  const milestone = core.getInput("milestone", requiredOptions);
   const token = process.env.GITHUB_TOKEN;
+  const { repository, owner } = github.context.repo
 
   return {
     repository,
-//    milestone,
+    owner,
     token,
   };
 }
@@ -29,14 +30,15 @@ async function run() {
     // Octokit.js
     // https://github.com/octokit/core.js#readme
 
-  const { repository, token } = getInputs();
+  const { repository, owner, token } = getInputs();
   console.log(token);
   const octokit = github.getOctokit(token);1
 
 
     const response = await octokit.request(
-      `GET /repos/{repo}/milestones/`,
+      `GET /repos/{owner}/{repo}/milestones/`,
       {
+        owner: owner,
         repo: repository
       }
     );
