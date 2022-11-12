@@ -32,7 +32,7 @@ const { repository, token } = getInputs();
 const octokit = github.getOctokit(token);
   
    const response = await octokit.request(
-    `GET /repos/{owner}/{repo}/milestones/`,
+    `GET /repos/{repo}/milestones/`,
     {
       repo: repository
     }
