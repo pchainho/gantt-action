@@ -1,13 +1,12 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: "Get Milestone Data"
+description: 'Get Milestones Data'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  repository:
+    description: "repository name"
     required: true
-    default: 'World'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  data:
+    description: "Milestones data JSON"
 runs:
   using: 'node16'
   main: 'index.js'
