@@ -17,7 +17,7 @@ function getInputs() {
   };
 }
 
-function getInputs(milestones) {
+function createGantt(milestones) {
   milestones.forEach(milestone => {
     console.log(milestone.title);
     console.log(milestone.description.starts);
@@ -46,7 +46,7 @@ async function run() {
     );
     const data = response.data;
 
-    console.log(data);
+    createGantt(data);
     core.setOutput('data', data);
 
   } catch (error) {
