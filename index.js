@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const outputFile = "gantt.puml"
 
 function getInputs() {
 //  const requiredOptions = { required: true };
@@ -18,13 +19,21 @@ function getInputs() {
 }
 
 function createGantt(milestones) {
+  const gantt = "@startgantt\n";
   milestones.forEach(milestone => {
-    console.log(milestone.title);
+    completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100)); 
+    newTask = "["+milestone.title+"] starts "+milestone.description.split(/\r?\n/)[0].split(" ")[1]+
+    " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+" complete\n";
+    gantt = gantt + newTask;
+/*    console.log(milestone.title);
     console.log(milestone.description.split(/\r?\n/)[0].split(" ")[1]);
-    console.log(milestone.due_on);
-    console.log(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100));
+    console.log(milestone.due_on.split('T')[0]);
+    console.log(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100));*/
 
   });
+  gantt = gantt + "@endgantt";
+  console.log(gantt);
+  return gantt;
 
 }
 
@@ -49,9 +58,18 @@ async function run() {
     createGantt(data);
     core.setOutput('data', data);
 
+
   } catch (error) {
     core.setFailed(error.message);
   }
 };
 
-run();
+/*const writeGantt = (gantt) =>
+new Promise((resolve, reject) => {
+  fs.writeFile(outputFile, createGantt(), (err) =>
+    err ? reject(err) : resolve(),
+  )
+})*/
+
+//run().then(() =>writeGantt).catch(console.error)
+run()
