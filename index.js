@@ -23,7 +23,7 @@ function createGantt(milestones) {
   milestones.forEach(milestone => {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100)); 
     newTask = "["+milestone.title+"] starts "+milestone.description.split(/\r?\n/)[0].split(" ")[1]+
-    " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+" complete\n";
+    " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+"% complete\n";
     gantt = gantt + newTask;
 /*    console.log(milestone.title);
     console.log(milestone.description.split(/\r?\n/)[0].split(" ")[1]);
@@ -37,7 +37,7 @@ function createGantt(milestones) {
 
 }
 
-async function run() {
+async function getMilestones() {
   try {
     // Octokit.js
     // https://github.com/octokit/core.js#readme
@@ -55,8 +55,9 @@ async function run() {
     );
     const data = response.data;
 
-    createGantt(data);
+//    createGantt(data);
     core.setOutput('data', data);
+    return data;
 
 
   } catch (error) {
@@ -64,12 +65,12 @@ async function run() {
   }
 };
 
-/*const writeGantt = (gantt) =>
+const writeGantt = (data) =>
 new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, createGantt(), (err) =>
+  fs.writeFile(outputFile, createGantt(data), (err) =>
     err ? reject(err) : resolve(),
   )
-})*/
+})
 
-//run().then(() =>writeGantt).catch(console.error)
-run()
+getMilestones().then(writeGantt).catch(console.error)
+//run()
