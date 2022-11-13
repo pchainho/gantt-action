@@ -19,7 +19,7 @@ function getInputs() {
 }
 
 function createGantt(milestones) {
-  const gantt = "@startgantt\n";
+  gantt = "@startgantt\n";
   milestones.forEach(milestone => {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100)); 
     newTask = "["+milestone.title+"] starts "+milestone.description.split(/\r?\n/)[0].split(" ")[1]+
