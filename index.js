@@ -20,7 +20,7 @@ function getInputs() {
 function createGantt(milestones) {
   milestones.forEach(milestone => {
     console.log(milestone.title);
-    console.log(milestone.description.starts);
+    console.log(milestone.description.split(/\r?\n/)[0].split(" ")[1]);
     console.log(milestone.due_on);
     console.log(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100));
 
