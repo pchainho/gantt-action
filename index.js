@@ -21,18 +21,22 @@ function getInputs() {
 
 function createGantt(milestones) {
   gantt = "@startgantt\n";
+  projectStart = "2100-01-01";
   milestones.forEach(milestone => {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100)); 
-    newTask = "["+milestone.title+"] starts "+milestone.description.split(/\r?\n/)[0].split(" ")[1]+
+    startDate = milestone.description.split(/\r?\n/)[0].split(" ")[1];
+    newTask = "["+milestone.title+"] starts "+startDate+
     " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+"% complete\n";
     gantt = gantt + newTask;
+    if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
 /*    console.log(milestone.title);
     console.log(milestone.description.split(/\r?\n/)[0].split(" ")[1]);
     console.log(milestone.due_on.split('T')[0]);
     console.log(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100));*/
 
+
   });
-  gantt = gantt + "@endgantt";
+  gantt = "Project starts "+projectStart+"\n"+gantt + "@endgantt";
   console.log(gantt);
   return gantt;
 
