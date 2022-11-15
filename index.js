@@ -23,7 +23,7 @@ function createGantt(milestones) {
   gantt = "";
   projectStart = "2100-01-01";
   milestones.forEach(milestone => {
-    completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100)); 
+    completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues)*100); 
     startDate = milestone.description.split(/\r?\n/)[0].split(" ")[1];
     newTask = "["+milestone.title+"] starts "+startDate+
     " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+"% complete\n";
