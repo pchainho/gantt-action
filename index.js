@@ -3,7 +3,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const plantumlEncoder = require('plantuml-encoder')
 const axios = require('axios');
-const outputFile = "gantt.puml"
+const outputFile = "gantt.svg"
 
 function getInputs() {
 //  const requiredOptions = { required: true };
@@ -91,7 +91,7 @@ new Promise((resolve, reject) => {
 
 const writeGantt = (data) =>
 new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, data, (err) =>
+  fs.writeFile(outputFile, Base64.encode(data), (err) =>
     err ? reject(err) : resolve(),
   )
 })
