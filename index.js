@@ -3,7 +3,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const plantumlEncoder = require('plantuml-encoder')
 const axios = require('axios');
-import { Base64 } from 'js-base64';
+const {Base64} = require('js-base64');
 const outputFile = "gantt.svg"
 
 function getInputs() {
