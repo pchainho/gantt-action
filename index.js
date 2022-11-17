@@ -1,6 +1,8 @@
 const fs = require("fs");
 const core = require('@actions/core');
 const github = require('@actions/github');
+const plantumlEncoder = require('plantuml-encoder')
+const axios = require('axios');
 const outputFile = "gantt.puml"
 
 function getInputs() {
@@ -70,12 +72,29 @@ async function getMilestones() {
   }
 };
 
+
+const getGantt = (milestones) => 
+new Promise((resolve, reject) => {
+  
+  const encoded = plantumlEncoder.encode(createGantt(milestones));
+
+
+      axios.get(`http://www.plantuml.com/plantuml/svg/${encoded}`).then(function (response) {
+        resolve(response);
+      })
+      .catch(function (error) {
+        reject(error);
+      })
+
+})
+
+
 const writeGantt = (data) =>
 new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, createGantt(data), (err) =>
+  fs.writeFile(outputFile, data, (err) =>
     err ? reject(err) : resolve(),
   )
 })
 
-getMilestones().then(writeGantt).catch(console.error)
+getMilestones().then(getGantt).then(writeGantt).catch(console.error)
 //run()
