@@ -4,6 +4,7 @@ const github = require('@actions/github');
 const plantumlEncoder = require('plantuml-encoder')
 const axios = require('axios');
 const {Base64} = require('js-base64');
+const { resolve } = require("path");
 const outputPlantumlFile = "gantt.puml"
 const outputSvgFile = "gantt.svg"
 
@@ -95,14 +96,15 @@ const writeFiles = ({plantuml, svg}) => {
 const writePlantuml = new Promise((resolve, reject) => {
   fs.writeFile(outputPlantumlFile, plantuml, (err) =>
     err ? reject(err) : resolve())
-})
+});
 const writeSvg = new Promise((resolve, reject) => {
   fs.writeFile(outputSvgFile, svg, (err) =>
     err ? reject(err) : resolve())
-})
+});
 
 Promise.all([writePlantuml, writeSvg]).then(() => {
   console.log("Files Written");
+  resolve();
 });
 
 }
