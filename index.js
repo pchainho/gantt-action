@@ -37,7 +37,8 @@ function createGantt(milestones) {
     if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
 
   });
-  gantt = "@startgantt\nProject starts "+projectStart+"\n"+gantt + "@endgantt";
+  gantt = "@startgantt\nsaturday are closed\nsunday are closed\nprintscale weekly\n"+
+     "Project starts "+projectStart+"\n"+gantt + "@endgantt";
   console.log(gantt);
   return gantt;
 
