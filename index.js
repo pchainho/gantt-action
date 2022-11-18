@@ -4,7 +4,9 @@ const github = require('@actions/github');
 const plantumlEncoder = require('plantuml-encoder')
 const axios = require('axios');
 const {Base64} = require('js-base64');
-const outputFile = "gantt.svg"
+const outputPlantumlFile = "gantt.puml"
+const outputSvgFile = "gantt.svg"
+
 
 function getInputs() {
 //  const requiredOptions = { required: true };
@@ -32,11 +34,6 @@ function createGantt(milestones) {
     " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+"% complete\n";
     gantt = gantt + newTask;
     if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
-/*    console.log(milestone.title);
-    console.log(milestone.description.split(/\r?\n/)[0].split(" ")[1]);
-    console.log(milestone.due_on.split('T')[0]);
-    console.log(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues*100));*/
-
 
   });
   gantt = "@startgantt\nProject starts "+projectStart+"\n"+gantt + "@endgantt";
@@ -61,11 +58,10 @@ async function getMilestones() {
         repo: repo
       }
     );
-    const data = response.data;
+    const milestones = response.data;
 
-//    createGantt(data);
-    core.setOutput('data', data);
-    return data;
+//    core.setOutput('data', data);
+    return milestones;
 
 
   } catch (error) {
@@ -76,13 +72,13 @@ async function getMilestones() {
 
 const getGantt = (milestones) => 
 new Promise((resolve, reject) => {
-  
-  const encoded = plantumlEncoder.encode(createGantt(milestones));
+  const plantuml = createGantt(milestones)
+ 
+  const encoded = plantumlEncoder.encode(plantuml);
 
 
       axios.get(`http://www.plantuml.com/plantuml/svg/${encoded}`).then(function (response) {
-        console.log(response.data);
-        resolve(response.data);
+        resolve(plantuml,response.data);
 
       })
       .catch(function (error) {
@@ -92,12 +88,22 @@ new Promise((resolve, reject) => {
 })
 
 
-const writeGantt = (data) =>
-new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, data, (err) =>
-    err ? reject(err) : resolve(),
-  )
+const writeFiles = (plantuml, svg) => {
+const writePlantuml = new Promise((resolve, reject) => {
+  fs.writeFile(outputPlantumlFile, plantuml, (err) =>
+    err ? reject(err) : resolve())
+})
+const writeSvg = new Promise((resolve, reject) => {
+  fs.writeFile(outputSvgFile, svg, (err) =>
+    err ? reject(err) : resolve())
 })
 
-getMilestones().then(getGantt).then(writeGantt).catch(console.error)
+Promise.all([writePlantuml, writeSvg]).then(() => {
+  console.log("Files Written");
+});
+
+}
+
+getMilestones().then(getGantt).then(writeFiles).catch(console.error)
+  
 //run()
