@@ -94,7 +94,7 @@ new Promise((resolve, reject) => {
 
 const writeGantt = (data) =>
 new Promise((resolve, reject) => {
-  fs.writeFile(outputFile, Base64.encode(data), (err) =>
+  fs.writeFile(outputFile, data, (err) =>
     err ? reject(err) : resolve(),
   )
 })
