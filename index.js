@@ -81,7 +81,9 @@ new Promise((resolve, reject) => {
 
 
       axios.get(`http://www.plantuml.com/plantuml/svg/${encoded}`).then(function (response) {
-        resolve(response);
+        console.log(response.data);
+        resolve(response.data);
+
       })
       .catch(function (error) {
         reject(error);
