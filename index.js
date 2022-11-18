@@ -78,7 +78,8 @@ new Promise((resolve, reject) => {
 
 
       axios.get(`http://www.plantuml.com/plantuml/svg/${encoded}`).then(function (response) {
-        resolve(plantuml,response.data);
+        const svg = response.data;
+        resolve({plantuml, svg});
 
       })
       .catch(function (error) {
@@ -88,7 +89,9 @@ new Promise((resolve, reject) => {
 })
 
 
-const writeFiles = (plantuml, svg) => {
+const writeFiles = ({plantuml, svg}) => {
+  console.log(plantuml);
+  console.log(svg);
 const writePlantuml = new Promise((resolve, reject) => {
   fs.writeFile(outputPlantumlFile, plantuml, (err) =>
     err ? reject(err) : resolve())
