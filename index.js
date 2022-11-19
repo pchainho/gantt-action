@@ -20,6 +20,9 @@ const myToken = process.env.MyToken;
   const owner = github.context.repo.owner;
   const repo = github.context.repo.repo;
 
+  console.log("token "+token)
+  console.log("mytoken "+myToken)
+
   return {
     repo,
     owner,
