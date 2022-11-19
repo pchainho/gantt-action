@@ -127,9 +127,7 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 const { repo, owner, token } = getInputs();
 
 
-getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
-
-let { graphql } = require("@octokit/graphql");
+//getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
 
 async function getRepo(repo, owner, token) {
   try {
