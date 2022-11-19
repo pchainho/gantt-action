@@ -32,8 +32,8 @@ function createGantt(milestones) {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues)*100); 
     startDate = milestone.description.split(/\r?\n/)[0].split(" ")[1];
     endDate = milestone.due_on.split('T')[0];
-    newTask = "["+milestone.title+"] starts "+startDate+" and ends "+endData+" and is "+completionStatus+"% complete";
-    if (new Date() > new Date(endData)) newTask = newTask + " is colored in red";
+    newTask = "["+milestone.title+"] starts "+startDate+" and ends "+endDate+" and is "+completionStatus+"% complete";
+    if (new Date() > new Date(endDate)) newTask = newTask + " is colored in red";
     gantt = gantt + newTask + "\n";
     if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
 
