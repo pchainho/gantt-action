@@ -47,12 +47,12 @@ function createGantt(milestones) {
     startDate = milestone.description.split(/\r?\n/)[0].split(" ")[1];
     endDate = milestone.due_on.split('T')[0];
     newTask = "["+milestone.title+"] starts "+startDate+" and ends "+endDate+" and is "+completionStatus+"% complete\n";
-    if (new Date() > new Date(endDate)) newTask = newTask +"["+milestone.title+"] is colored in red\n";
+//    if (new Date() > new Date(endDate)) newTask = newTask +"["+milestone.title+"] is colored in red\n";
     gantt = gantt + newTask + "\n";
     if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
 
   });
-  gantt = "@startgantt\n"+style+"saturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\ntoday is colored in #Magenta\n"+
+  gantt = "@startgantt\n"+style+"saturday are closed\nsunday are closed\nprintscale weekly zoom 1\ntoday is colored in #Magenta\n"+
      "Project starts "+projectStart+"\n"+gantt + "@endgantt";
      console.log(gantt)
   return gantt;
