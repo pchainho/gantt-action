@@ -136,10 +136,10 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 async function getRepo(repo, owner, token, myToken) {
   try {
 
-console.log(myToken);
+console.log("getrepo "+myToken);
     graphqlWithAuth  = graphql.defaults({
   headers: {
-    authorization: myToken,
+    authorization: token,
   },
 });
 
