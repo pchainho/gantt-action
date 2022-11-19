@@ -31,13 +31,14 @@ function createGantt(milestones) {
   milestones.forEach(milestone => {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues)*100); 
     startDate = milestone.description.split(/\r?\n/)[0].split(" ")[1];
-    newTask = "["+milestone.title+"] starts "+startDate+
-    " and ends "+milestone.due_on.split('T')[0]+" and is "+completionStatus+"% complete\n";
-    gantt = gantt + newTask;
+    endDate = milestone.due_on.split('T')[0];
+    newTask = "["+milestone.title+"] starts "+startDate+" and ends "+endData+" and is "+completionStatus+"% complete";
+    if (new Date() > new Date(endData)) newTask = newTask + " is colored in red";
+    gantt = gantt + newTask + "\n";
     if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
 
   });
-  gantt = "@startgantt\nsaturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\n"+
+  gantt = "@startgantt\nsaturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\ntoday is colored in #e69b00\n"+
      "Project starts "+projectStart+"\n"+gantt + "@endgantt";
   console.log(gantt);
   return gantt;
