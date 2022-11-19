@@ -3,8 +3,8 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const plantumlEncoder = require('plantuml-encoder')
 const axios = require('axios');
-const {Base64} = require('js-base64');
 const { resolve } = require("path");
+const { graphql } = require("@octokit/graphql");
 const outputPlantumlFile = "gantt.puml"
 const outputSvgFile = "gantt.svg"
 
@@ -59,12 +59,11 @@ function createGantt(milestones) {
 
 }
 
-async function getMilestones() {
+async function getMilestones(repo, owner, token) {
   try {
     // Octokit.js
     // https://github.com/octokit/core.js#readme
 
-  const { repo, owner, token } = getInputs();
 
   const octokit = github.getOctokit(token);
 
@@ -125,6 +124,46 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 
 }
 
-getMilestones().then(getGantt).then(writeFiles).catch(console.error)
+const { repo, owner, token } = getInputs();
+
+
+getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
+
+let { graphql } = require("@octokit/graphql");
+
+async function getRepo(repo, owner, token) {
+  try {
+
+
+graphql = graphql.defaults({
+  headers: {
+    authorization: token,
+  },
+});
+
+const { repository } = await graphql(`
+  {
+    repository(owner: ${owner}, name: ${repo}) {
+      issues(last: 3) {
+        edges {
+          node {
+            title
+          }
+        }
+      }
+    }
+  }
+`);
+return repository;
+} catch (error) {
+  core.setFailed(error.message);
+}
+
+}
+
+getRepo(repo, owner, token).then(
+  (repo) => console.log(repo)
+)
+
   
 //run()
