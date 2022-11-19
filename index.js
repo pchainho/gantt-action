@@ -26,7 +26,21 @@ function getInputs() {
 }
 
 function createGantt(milestones) {
-  gantt = "";
+  style = "<style>\n"+
+  "ganttDiagram {\n"+
+  "   task {\n"+
+  "    BackGroundColor GreenYellow\n"+
+  "    LineColor Green \n"+
+  "    unstarted {\n"+
+  "      BackGroundColor PaleVioletRed\n"+
+  "      LineColor FireBrick\n"+
+  "      FontColor Gold\n"+
+  "    }\n"+
+  "  }\n"+
+  "}\n";
+  "</style>\n";
+
+  gantt = style;
   projectStart = "2100-01-01";
   milestones.forEach(milestone => {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues)*100); 
@@ -38,7 +52,7 @@ function createGantt(milestones) {
     if (new Date(startDate) < new Date(projectStart)) projectStart = startDate;
 
   });
-  gantt = "@startgantt\nsaturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\ntoday is colored in #e69b00\n"+
+  gantt = "@startgantt\n"+style+"saturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\ntoday is colored in #Magenta\n"+
      "Project starts "+projectStart+"\n"+gantt + "@endgantt";
   console.log(gantt);
   return gantt;
