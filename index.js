@@ -40,7 +40,7 @@ function createGantt(milestones) {
   "}\n";
   "</style>\n";
 
-  gantt = style;
+  gantt = "";
   projectStart = "2100-01-01";
   milestones.forEach(milestone => {
     completionStatus = Math.round(milestone.closed_issues/(milestone.open_issues+milestone.closed_issues)*100); 
@@ -54,7 +54,6 @@ function createGantt(milestones) {
   });
   gantt = "@startgantt\n"+style+"saturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\ntoday is colored in #Magenta\n"+
      "Project starts "+projectStart+"\n"+gantt + "@endgantt";
-  console.log(gantt);
   return gantt;
 
 }
