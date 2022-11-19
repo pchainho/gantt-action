@@ -139,7 +139,7 @@ async function getRepo(repo, owner, token, myToken) {
 console.log("getrepo "+myToken);
     graphqlWithAuth  = graphql.defaults({
   headers: {
-    authorization: "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"
+    authorization: "token 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"
   },
 });
 
