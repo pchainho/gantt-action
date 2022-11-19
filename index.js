@@ -133,13 +133,13 @@ async function getRepo(repo, owner, token) {
   try {
 
 
-graphql = graphql.defaults({
+    graphqlWithAuth  = graphql.defaults({
   headers: {
     authorization: token,
   },
 });
 
-const { repository } = await graphql(`
+const { repository } = await graphqlWithAuth (`
   {
     repository(owner: ${owner}, name: ${repo}) {
       issues(last: 3) {
