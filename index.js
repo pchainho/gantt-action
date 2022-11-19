@@ -37,7 +37,7 @@ function createGantt(milestones) {
   "      FontColor Gold\n"+
   "    }\n"+
   "  }\n"+
-  "}\n";
+  "}\n"+
   "</style>\n";
 
   gantt = "";
@@ -54,6 +54,7 @@ function createGantt(milestones) {
   });
   gantt = "@startgantt\n"+style+"saturday are closed\nsunday are closed\nprintscale weekly zoom 0.5\ntoday is colored in #Magenta\n"+
      "Project starts "+projectStart+"\n"+gantt + "@endgantt";
+     console.log(gantt)
   return gantt;
 
 }
