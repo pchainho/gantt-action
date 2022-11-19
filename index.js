@@ -14,14 +14,17 @@ function getInputs() {
 
 //  const repository = core.getInput("repository", requiredOptions);
 //  const milestone = core.getInput("milestone", requiredOptions);
-  const token = process.env.GITHUB_TOKEN;
+const token = process.env.GITHUB_TOKEN;
+const myToken = process.env.MyToken;
+
   const owner = github.context.repo.owner;
   const repo = github.context.repo.repo;
 
   return {
     repo,
     owner,
-    token
+    token,
+    myToken
   };
 }
 
@@ -124,18 +127,16 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 
 }
 
-const { repo, owner, token } = getInputs();
-
 
 //getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
 
-async function getRepo(repo, owner, token) {
+async function getRepo(repo, owner, token, myToken) {
   try {
 
-
+console.log(myToken);
     graphqlWithAuth  = graphql.defaults({
   headers: {
-    authorization: token,
+    authorization: myToken,
   },
 });
 
@@ -159,7 +160,9 @@ return repository;
 
 }
 
-getRepo(repo, owner, token).then(
+const { repo, owner, token, myToken } = getInputs();
+
+getRepo(repo, owner, token, myToken).then(
   (repo) => console.log(repo)
 )
 
