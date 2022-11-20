@@ -10,18 +10,13 @@ const outputSvgFile = "gantt.svg"
 
 
 function getInputs() {
-//  const requiredOptions = { required: true };
-
-//  const repository = core.getInput("repository", requiredOptions);
-//  const milestone = core.getInput("milestone", requiredOptions);
 const token = process.env.GITHUB_TOKEN;
-//const myToken = process.env.MyToken;
 
   const owner = github.context.repo.owner;
   const repo = github.context.repo.repo;
 
-/*  console.log("token "+token)
-  console.log("mytoken "+myToken)*/
+  console.log("token "+token)
+/*  console.log("mytoken "+myToken)*/
 
   return {
     repo,
