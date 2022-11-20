@@ -130,18 +130,14 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 
 }
 
-const { repo, owner, token } = getInputs();
 
-
-getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
-/*
-async function getRepo(repo, owner, token, myToken) {
+async function getRepoWithGraphQL(repo, owner, token) {
   try {
 
-console.log("getrepo "+myToken);
+console.log("getrepo "+token);
     graphqlWithAuth  = graphql.defaults({
   headers: {
-    authorization: "token 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"
+    authorization: token
   },
 });
 
@@ -166,9 +162,16 @@ return repository;
 }
 
 
-getRepo(repo, owner, token, myToken).then(
+
+const { repo, owner, token } = getInputs();
+
+
+//getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
+
+
+getRepoWithGraphQL(repo, owner, token).then(
   (repo) => console.log(repo)
-)*/
+)
 
   
 //run()
