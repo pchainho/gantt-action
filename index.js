@@ -130,6 +130,8 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 
 }
 
+const { repo, owner, token } = getInputs();
+
 
 getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
 /*
@@ -163,7 +165,6 @@ return repository;
 
 }
 
-const { repo, owner, token, myToken } = getInputs();
 
 getRepo(repo, owner, token, myToken).then(
   (repo) => console.log(repo)
