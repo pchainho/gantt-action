@@ -15,19 +15,19 @@ function getInputs() {
 //  const repository = core.getInput("repository", requiredOptions);
 //  const milestone = core.getInput("milestone", requiredOptions);
 const token = process.env.GITHUB_TOKEN;
-const myToken = process.env.MyToken;
+//const myToken = process.env.MyToken;
 
   const owner = github.context.repo.owner;
   const repo = github.context.repo.repo;
 
-  console.log("token "+token)
-  console.log("mytoken "+myToken)
+/*  console.log("token "+token)
+  console.log("mytoken "+myToken)*/
 
   return {
     repo,
     owner,
-    token,
-    myToken
+    token
+//    myToken
   };
 }
 
@@ -131,8 +131,8 @@ Promise.all([writePlantuml, writeSvg]).then(() => {
 }
 
 
-//getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
-
+getMilestones(repo, owner, token).then(getGantt).then(writeFiles).catch(console.error)
+/*
 async function getRepo(repo, owner, token, myToken) {
   try {
 
@@ -167,7 +167,7 @@ const { repo, owner, token, myToken } = getInputs();
 
 getRepo(repo, owner, token, myToken).then(
   (repo) => console.log(repo)
-)
+)*/
 
   
 //run()
