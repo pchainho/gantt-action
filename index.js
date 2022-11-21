@@ -10,7 +10,7 @@ const outputSvgFile = "gantt.svg"
 
 
 function getInputs() {
-const token = process.env.GITHUB_TOKEN;
+const token = process.env.GRAPHQL_TOKEN;
 
   const owner = github.context.repo.owner;
   const repo = github.context.repo.repo;
